@@ -1,919 +1,224 @@
-
 import './App.css';
-import { useEffect, useState } from "react";
+import Table from './table';
+import { useEffect, useState } from 'react';
 
-const App = () => {
-  const [data, setData] = useState({ data: [] });
+function App() {
+
+  const [data, setData] = useState(null);  
+  // const [data, setData] = useState({ data: [] });
   const [isLoading, setIsLoading] = useState(false);
   const [err, setErr] = useState("");
 
-  // const [users, setUsers] = useState([])
-
-  // const fetchData = async () => {
-  //   const response = await fetch("https://jsonplaceholder.typicode.com/users")
-  //   const data = await response.json()
-  //   setUsers(data)
-  // }
-
-  useEffect(() => {
-    console.log('kick off useEffect')
-    handleClick()
-  }, [])
-
-
-  const handleClick = async () => {
-    setIsLoading(true);
-
-    try {
-      const requestOptions = {
+  const requestOptions = {
         method: "GET",
         mode: "cors",
-        // headers: { "Content-Type": "application/json" },
+        // headers: { "Content-Type": "application/json
       };
 
       const contentType = 'application/json'
       const api_key = 'e13626d03d8e4c03ac07f95541b3091b'
 
-      const response = await fetch(`https://api.wmata.com/TrainPositions/TrainPositions?contentType=${contentType}&api_key=${api_key}`, requestOptions);
-      // const response = await fetch("https://reqres.in/api/users", {
-      //   method: "GET",
-      //   headers: {
-      //     Accept: "application/json",
-      //   },
-      // });
-
-      // console.log(response);
-
-      if (!response.ok) {
-        throw new Error(`Error! status: ${response.status}`);
-      }
-      const result = await response.json();
-      // console.log("result is: ", JSON.stringify(result, null, 4));
-
-      setData(result);
-    } catch (err) {
-      setErr(err.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  
+  useEffect(() => {
+    // fetch('https://jsonplaceholder.typicode.com/todos')
+    fetch(`https://api.wmata.com/TrainPositions/TrainPositions?contentType=${contentType}&api_key=${api_key}`, requestOptions)
+      .then(response => response.json())
+      .then(json => setData(json))
+  }, []);
 
   const temp_json = {
-    TrainPositions: [
-      {
-        TrainId: "008",
-        TrainNumber: "000",
-        CarCount: 0,
-        DirectionNum: 1,
-        CircuitId: 1487,
-        DestinationStationCode: null,
-        LineCode: null,
-        SecondsAtLocation: 54194,
-        ServiceType: "Unknown",
-      },
-      {
-        TrainId: "009",
-        TrainNumber: "000",
-        CarCount: 0,
-        DirectionNum: 2,
-        CircuitId: 1488,
-        DestinationStationCode: null,
-        LineCode: null,
-        SecondsAtLocation: 54194,
-        ServiceType: "Unknown",
-      },
-      {
-        TrainId: "010",
-        TrainNumber: "000",
-        CarCount: 0,
-        DirectionNum: 1,
-        CircuitId: 1656,
-        DestinationStationCode: null,
-        LineCode: null,
-        SecondsAtLocation: 54194,
-        ServiceType: "Unknown",
-      },
-      {
-        TrainId: "011",
-        TrainNumber: "000",
-        CarCount: 0,
-        DirectionNum: 2,
-        CircuitId: 1657,
-        DestinationStationCode: null,
-        LineCode: null,
-        SecondsAtLocation: 54194,
-        ServiceType: "Unknown",
-      },
-      {
-        TrainId: "046",
-        TrainNumber: "000",
-        CarCount: 0,
-        DirectionNum: 2,
-        CircuitId: 1701,
-        DestinationStationCode: null,
-        LineCode: null,
-        SecondsAtLocation: 54194,
-        ServiceType: "Unknown",
-      },
-      {
-        TrainId: "051",
-        TrainNumber: "000",
-        CarCount: 0,
-        DirectionNum: 1,
-        CircuitId: 1683,
-        DestinationStationCode: null,
-        LineCode: null,
-        SecondsAtLocation: 35402,
-        ServiceType: "Unknown",
-      },
-      {
-        TrainId: "055",
-        TrainNumber: "PM47",
-        CarCount: 0,
-        DirectionNum: 1,
-        CircuitId: 1638,
-        DestinationStationCode: null,
-        LineCode: null,
-        SecondsAtLocation: 54194,
-        ServiceType: "Unknown",
-      },
-      {
-        TrainId: "161",
-        TrainNumber: "000",
-        CarCount: 6,
-        DirectionNum: 1,
-        CircuitId: 2581,
-        DestinationStationCode: null,
-        LineCode: null,
-        SecondsAtLocation: 2471,
-        ServiceType: "Unknown",
-      },
-      {
-        TrainId: "164",
-        TrainNumber: "708",
-        CarCount: 6,
-        DirectionNum: 1,
-        CircuitId: 3201,
-        DestinationStationCode: null,
-        LineCode: null,
-        SecondsAtLocation: 1,
-        ServiceType: "NoPassengers",
-      },
-      {
-        TrainId: "193",
-        TrainNumber: "703",
-        CarCount: 6,
-        DirectionNum: 1,
-        CircuitId: 2807,
-        DestinationStationCode: null,
-        LineCode: null,
-        SecondsAtLocation: 17,
-        ServiceType: "NoPassengers",
-      },
-      {
-        TrainId: "218",
-        TrainNumber: "000",
-        CarCount: 0,
-        DirectionNum: 1,
-        CircuitId: 1531,
-        DestinationStationCode: null,
-        LineCode: null,
-        SecondsAtLocation: 54194,
-        ServiceType: "Unknown",
-      },
-      {
-        TrainId: "219",
-        TrainNumber: "000",
-        CarCount: 0,
-        DirectionNum: 1,
-        CircuitId: 1543,
-        DestinationStationCode: null,
-        LineCode: null,
-        SecondsAtLocation: 54194,
-        ServiceType: "Unknown",
-      },
-      {
-        TrainId: "220",
-        TrainNumber: "000",
-        CarCount: 0,
-        DirectionNum: 2,
-        CircuitId: 1710,
-        DestinationStationCode: null,
-        LineCode: null,
-        SecondsAtLocation: 54194,
-        ServiceType: "Unknown",
-      },
-      {
-        TrainId: "222",
-        TrainNumber: "000",
-        CarCount: 6,
-        DirectionNum: 1,
-        CircuitId: 660,
-        DestinationStationCode: null,
-        LineCode: null,
-        SecondsAtLocation: 164,
-        ServiceType: "Unknown",
-      },
-      {
-        TrainId: "247",
-        TrainNumber: "000",
-        CarCount: 0,
-        DirectionNum: 1,
-        CircuitId: 3281,
-        DestinationStationCode: null,
-        LineCode: null,
-        SecondsAtLocation: 54194,
-        ServiceType: "Unknown",
-      },
-      {
-        TrainId: "307",
-        TrainNumber: "000",
-        CarCount: 6,
-        DirectionNum: 2,
-        CircuitId: 1,
-        DestinationStationCode: null,
-        LineCode: null,
-        SecondsAtLocation: 16183,
-        ServiceType: "Unknown",
-      },
-      {
-        TrainId: "327",
-        TrainNumber: "000",
-        CarCount: 0,
-        DirectionNum: 2,
-        CircuitId: 1677,
-        DestinationStationCode: null,
-        LineCode: null,
-        SecondsAtLocation: 54194,
-        ServiceType: "Unknown",
-      },
-      {
-        TrainId: "350",
-        TrainNumber: "822",
-        CarCount: 6,
-        DirectionNum: 2,
-        CircuitId: 1331,
-        DestinationStationCode: null,
-        LineCode: null,
-        SecondsAtLocation: 9433,
-        ServiceType: "NoPassengers",
-      },
-      {
-        TrainId: "363",
-        TrainNumber: "000",
-        CarCount: 0,
-        DirectionNum: 1,
-        CircuitId: 1525,
-        DestinationStationCode: null,
-        LineCode: null,
-        SecondsAtLocation: 29829,
-        ServiceType: "Unknown",
-      },
-      {
-        TrainId: "377",
-        TrainNumber: "000",
-        CarCount: 0,
-        DirectionNum: 2,
-        CircuitId: 1688,
-        DestinationStationCode: null,
-        LineCode: null,
-        SecondsAtLocation: 54194,
-        ServiceType: "Unknown",
-      },
-      {
-        TrainId: "381",
-        TrainNumber: "000",
-        CarCount: 0,
-        DirectionNum: 2,
-        CircuitId: 1505,
-        DestinationStationCode: null,
-        LineCode: null,
-        SecondsAtLocation: 54194,
-        ServiceType: "Unknown",
-      },
-      {
-        TrainId: "388",
-        TrainNumber: "LP51",
-        CarCount: 0,
-        DirectionNum: 2,
-        CircuitId: 2066,
-        DestinationStationCode: null,
-        LineCode: null,
-        SecondsAtLocation: 38,
-        ServiceType: "Unknown",
-      },
-      {
-        TrainId: "425",
-        TrainNumber: "000",
-        CarCount: 0,
-        DirectionNum: 2,
-        CircuitId: 1464,
-        DestinationStationCode: null,
-        LineCode: null,
-        SecondsAtLocation: 54194,
-        ServiceType: "Unknown",
-      },
-      {
-        TrainId: "167",
-        TrainNumber: "406",
-        CarCount: 6,
-        DirectionNum: 1,
-        CircuitId: 2423,
-        DestinationStationCode: "G05",
-        LineCode: "BL",
-        SecondsAtLocation: 3,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "169",
-        TrainNumber: "407",
-        CarCount: 6,
-        DirectionNum: 1,
-        CircuitId: 1392,
-        DestinationStationCode: "G05",
-        LineCode: "BL",
-        SecondsAtLocation: 6,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "171",
-        TrainNumber: "408",
-        CarCount: 6,
-        DirectionNum: 1,
-        CircuitId: 1002,
-        DestinationStationCode: "G05",
-        LineCode: "BL",
-        SecondsAtLocation: 2,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "209",
-        TrainNumber: "491",
-        CarCount: 6,
-        DirectionNum: 1,
-        CircuitId: 2643,
-        DestinationStationCode: "G05",
-        LineCode: "BL",
-        SecondsAtLocation: 1,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "179",
-        TrainNumber: "402",
-        CarCount: 6,
-        DirectionNum: 2,
-        CircuitId: 2716,
-        DestinationStationCode: "J03",
-        LineCode: "BL",
-        SecondsAtLocation: 2,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "282",
-        TrainNumber: "404",
-        CarCount: 0,
-        DirectionNum: 2,
-        CircuitId: 1597,
-        DestinationStationCode: "J03",
-        LineCode: "BL",
-        SecondsAtLocation: 3,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "305",
-        TrainNumber: "403",
-        CarCount: 8,
-        DirectionNum: 2,
-        CircuitId: 1298,
-        DestinationStationCode: "J03",
-        LineCode: "BL",
-        SecondsAtLocation: 15,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "467",
-        TrainNumber: "492",
-        CarCount: 6,
-        DirectionNum: 2,
-        CircuitId: 2551,
-        DestinationStationCode: "J03",
-        LineCode: "BL",
-        SecondsAtLocation: 2,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "168",
-        TrainNumber: "508",
-        CarCount: 8,
-        DirectionNum: 1,
-        CircuitId: 1863,
-        DestinationStationCode: "E10",
-        LineCode: "GR",
-        SecondsAtLocation: 5,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "273",
-        TrainNumber: "502",
-        CarCount: 6,
-        DirectionNum: 1,
-        CircuitId: 2204,
-        DestinationStationCode: "E10",
-        LineCode: "GR",
-        SecondsAtLocation: 3,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "337",
-        TrainNumber: "501",
-        CarCount: 6,
-        DirectionNum: 1,
-        CircuitId: 1776,
-        DestinationStationCode: "E10",
-        LineCode: "GR",
-        SecondsAtLocation: 13,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "199",
-        TrainNumber: "506",
-        CarCount: 6,
-        DirectionNum: 2,
-        CircuitId: 1995,
-        DestinationStationCode: "F11",
-        LineCode: "GR",
-        SecondsAtLocation: 10,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "208",
-        TrainNumber: "591",
-        CarCount: 6,
-        DirectionNum: 2,
-        CircuitId: 2254,
-        DestinationStationCode: "F11",
-        LineCode: "GR",
-        SecondsAtLocation: 711,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "213",
-        TrainNumber: "505",
-        CarCount: 6,
-        DirectionNum: 2,
-        CircuitId: 2342,
-        DestinationStationCode: "F11",
-        LineCode: "GR",
-        SecondsAtLocation: 3,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "226",
-        TrainNumber: "592",
-        CarCount: 6,
-        DirectionNum: 2,
-        CircuitId: 2023,
-        DestinationStationCode: "F11",
-        LineCode: "GR",
-        SecondsAtLocation: 3,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "266",
-        TrainNumber: "504",
-        CarCount: 8,
-        DirectionNum: 2,
-        CircuitId: 2281,
-        DestinationStationCode: "F11",
-        LineCode: "GR",
-        SecondsAtLocation: 4,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "162",
-        TrainNumber: "901",
-        CarCount: 6,
-        DirectionNum: 1,
-        CircuitId: 1115,
-        DestinationStationCode: "D08",
-        LineCode: "OR",
-        SecondsAtLocation: 5,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "178",
-        TrainNumber: "906",
-        CarCount: 6,
-        DirectionNum: 1,
-        CircuitId: 1444,
-        DestinationStationCode: "D08",
-        LineCode: "OR",
-        SecondsAtLocation: 8,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "188",
-        TrainNumber: "991",
-        CarCount: 6,
-        DirectionNum: 1,
-        CircuitId: 2845,
-        DestinationStationCode: "D08",
-        LineCode: "OR",
-        SecondsAtLocation: 2,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "174",
-        TrainNumber: "905",
-        CarCount: 6,
-        DirectionNum: 2,
-        CircuitId: 1323,
-        DestinationStationCode: "K08",
-        LineCode: "OR",
-        SecondsAtLocation: 5,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "283",
-        TrainNumber: "904",
-        CarCount: 6,
-        DirectionNum: 2,
-        CircuitId: 2999,
-        DestinationStationCode: "K08",
-        LineCode: "OR",
-        SecondsAtLocation: 1,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "173",
-        TrainNumber: "192",
-        CarCount: 6,
-        DirectionNum: 2,
-        CircuitId: 868,
-        DestinationStationCode: "A15",
-        LineCode: "RD",
-        SecondsAtLocation: 788,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "181",
-        TrainNumber: "116",
-        CarCount: 6,
-        DirectionNum: 2,
-        CircuitId: 221,
-        DestinationStationCode: "A15",
-        LineCode: "RD",
-        SecondsAtLocation: 3,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "191",
-        TrainNumber: "117",
-        CarCount: 6,
-        DirectionNum: 2,
-        CircuitId: 260,
-        DestinationStationCode: "A15",
-        LineCode: "RD",
-        SecondsAtLocation: 50,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "206",
-        TrainNumber: "102",
-        CarCount: 6,
-        DirectionNum: 2,
-        CircuitId: 362,
-        DestinationStationCode: "A15",
-        LineCode: "RD",
-        SecondsAtLocation: 4,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "212",
-        TrainNumber: "103",
-        CarCount: 6,
-        DirectionNum: 2,
-        CircuitId: 672,
-        DestinationStationCode: "A15",
-        LineCode: "RD",
-        SecondsAtLocation: 4,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "221",
-        TrainNumber: "104",
-        CarCount: 6,
-        DirectionNum: 2,
-        CircuitId: 765,
-        DestinationStationCode: "A15",
-        LineCode: "RD",
-        SecondsAtLocation: 1,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "333",
-        TrainNumber: "101",
-        CarCount: 6,
-        DirectionNum: 2,
-        CircuitId: 317,
-        DestinationStationCode: "A15",
-        LineCode: "RD",
-        SecondsAtLocation: 5,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "205",
-        TrainNumber: "108",
-        CarCount: 6,
-        DirectionNum: 1,
-        CircuitId: 587,
-        DestinationStationCode: "B11",
-        LineCode: "RD",
-        SecondsAtLocation: 2,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "217",
-        TrainNumber: "113",
-        CarCount: 6,
-        DirectionNum: 1,
-        CircuitId: 126,
-        DestinationStationCode: "B11",
-        LineCode: "RD",
-        SecondsAtLocation: 22,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "223",
-        TrainNumber: "191",
-        CarCount: 6,
-        DirectionNum: 1,
-        CircuitId: 33,
-        DestinationStationCode: "B11",
-        LineCode: "RD",
-        SecondsAtLocation: 2,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "230",
-        TrainNumber: "109",
-        CarCount: 6,
-        DirectionNum: 1,
-        CircuitId: 532,
-        DestinationStationCode: "B11",
-        LineCode: "RD",
-        SecondsAtLocation: 6,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "265",
-        TrainNumber: "110",
-        CarCount: 6,
-        DirectionNum: 1,
-        CircuitId: 478,
-        DestinationStationCode: "B11",
-        LineCode: "RD",
-        SecondsAtLocation: 6,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "312",
-        TrainNumber: "107",
-        CarCount: 6,
-        DirectionNum: 1,
-        CircuitId: 652,
-        DestinationStationCode: "B11",
-        LineCode: "RD",
-        SecondsAtLocation: 98,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "320",
-        TrainNumber: "111",
-        CarCount: 6,
-        DirectionNum: 1,
-        CircuitId: 164,
-        DestinationStationCode: "B11",
-        LineCode: "RD",
-        SecondsAtLocation: 13,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "165",
-        TrainNumber: "606",
-        CarCount: 6,
-        DirectionNum: 1,
-        CircuitId: 1419,
-        DestinationStationCode: "G05",
-        LineCode: "SV",
-        SecondsAtLocation: 4,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "170",
-        TrainNumber: "691",
-        CarCount: 6,
-        DirectionNum: 1,
-        CircuitId: 2886,
-        DestinationStationCode: "G05",
-        LineCode: "SV",
-        SecondsAtLocation: 48,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "211",
-        TrainNumber: "605",
-        CarCount: 6,
-        DirectionNum: 1,
-        CircuitId: 2453,
-        DestinationStationCode: "G05",
-        LineCode: "SV",
-        SecondsAtLocation: 7,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "166",
-        TrainNumber: "602",
-        CarCount: 8,
-        DirectionNum: 2,
-        CircuitId: 3014,
-        DestinationStationCode: "N06",
-        LineCode: "SV",
-        SecondsAtLocation: 7,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "182",
-        TrainNumber: "601",
-        CarCount: 6,
-        DirectionNum: 2,
-        CircuitId: 3292,
-        DestinationStationCode: "N06",
-        LineCode: "SV",
-        SecondsAtLocation: 6,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "187",
-        TrainNumber: "603",
-        CarCount: 6,
-        DirectionNum: 2,
-        CircuitId: 1552,
-        DestinationStationCode: "N06",
-        LineCode: "SV",
-        SecondsAtLocation: 1,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "200",
-        TrainNumber: "692",
-        CarCount: 6,
-        DirectionNum: 2,
-        CircuitId: 2537,
-        DestinationStationCode: "N06",
-        LineCode: "SV",
-        SecondsAtLocation: 41,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "183",
-        TrainNumber: "308",
-        CarCount: 8,
-        DirectionNum: 2,
-        CircuitId: 1217,
-        DestinationStationCode: "C15",
-        LineCode: "YL",
-        SecondsAtLocation: 20,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "201",
-        TrainNumber: "301",
-        CarCount: 6,
-        DirectionNum: 2,
-        CircuitId: 1899,
-        DestinationStationCode: "C15",
-        LineCode: "YL",
-        SecondsAtLocation: 15,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "202",
-        TrainNumber: "392",
-        CarCount: 0,
-        DirectionNum: 2,
-        CircuitId: 2040,
-        DestinationStationCode: "C15",
-        LineCode: "YL",
-        SecondsAtLocation: 1,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "215",
-        TrainNumber: "307",
-        CarCount: 6,
-        DirectionNum: 2,
-        CircuitId: 1148,
-        DestinationStationCode: "C15",
-        LineCode: "YL",
-        SecondsAtLocation: 6,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "203",
-        TrainNumber: "305",
-        CarCount: 8,
-        DirectionNum: 1,
-        CircuitId: 2241,
-        DestinationStationCode: "E10",
-        LineCode: "YL",
-        SecondsAtLocation: 17,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "210",
-        TrainNumber: "303",
-        CarCount: 6,
-        DirectionNum: 1,
-        CircuitId: 1878,
-        DestinationStationCode: "E10",
-        LineCode: "YL",
-        SecondsAtLocation: 7,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "216",
-        TrainNumber: "304",
-        CarCount: 6,
-        DirectionNum: 1,
-        CircuitId: 1809,
-        DestinationStationCode: "E10",
-        LineCode: "YL",
-        SecondsAtLocation: 14,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "257",
-        TrainNumber: "391",
-        CarCount: 6,
-        DirectionNum: 1,
-        CircuitId: 982,
-        DestinationStationCode: "E10",
-        LineCode: "YL",
-        SecondsAtLocation: 5,
-        ServiceType: "Normal",
-      },
-    ],
-  };
+        TrainPositions: [
+          {
+            TrainId: "008",
+            TrainNumber: "000",
+            CarCount: 0,
+            DirectionNum: 1,
+            CircuitId: 1487,
+            DestinationStationCode: null,
+            LineCode: null,
+            SecondsAtLocation: 54194,
+            ServiceType: "Unknown",
+          },
+          {
+            TrainId: "009",
+            TrainNumber: "000",
+            CarCount: 0,
+            DirectionNum: 2,
+            CircuitId: 1488,
+            DestinationStationCode: null,
+            LineCode: null,
+            SecondsAtLocation: 54194,
+            ServiceType: "Unknown",
+          },
+          {
+            TrainId: "010",
+            TrainNumber: "000",
+            CarCount: 0,
+            DirectionNum: 1,
+            CircuitId: 1656,
+            DestinationStationCode: null,
+            LineCode: null,
+            SecondsAtLocation: 54194,
+            ServiceType: "Unknown",
+          },
+          {
+            TrainId: "011",
+            TrainNumber: "000",
+            CarCount: 0,
+            DirectionNum: 2,
+            CircuitId: 1657,
+            DestinationStationCode: null,
+            LineCode: null,
+            SecondsAtLocation: 54194,
+            ServiceType: "Unknown",
+          },
+          {
+            TrainId: "046",
+            TrainNumber: "000",
+            CarCount: 0,
+            DirectionNum: 2,
+            CircuitId: 1701,
+            DestinationStationCode: null,
+            LineCode: null,
+            SecondsAtLocation: 54194,
+            ServiceType: "Unknown",
+          },
+          {
+            TrainId: "051",
+            TrainNumber: "000",
+            CarCount: 0,
+            DirectionNum: 1,
+            CircuitId: 1683,
+            DestinationStationCode: null,
+            LineCode: null,
+            SecondsAtLocation: 35402,
+            ServiceType: "Unknown",
+          },
+          {
+            TrainId: "055",
+            TrainNumber: "PM47",
+            CarCount: 0,
+            DirectionNum: 1,
+            CircuitId: 1638,
+            DestinationStationCode: null,
+            LineCode: null,
+            SecondsAtLocation: 54194,
+            ServiceType: "Unknown",
+          },
+          {
+            TrainId: "161",
+            TrainNumber: "000",
+            CarCount: 6,
+            DirectionNum: 1,
+            CircuitId: 2581,
+            DestinationStationCode: null,
+            LineCode: null,
+            SecondsAtLocation: 2471,
+            ServiceType: "Unknown",
+          },
+          {
+            TrainId: "164",
+            TrainNumber: "708",
+            CarCount: 6,
+            DirectionNum: 1,
+            CircuitId: 3201,
+            DestinationStationCode: null,
+            LineCode: null,
+            SecondsAtLocation: 1,
+            ServiceType: "NoPassengers",
+          },
+          {
+            TrainId: "193",
+            TrainNumber: "703",
+            CarCount: 6,
+            DirectionNum: 1,
+            CircuitId: 2807,
+            DestinationStationCode: null,
+            LineCode: null,
+            SecondsAtLocation: 17,
+            ServiceType: "NoPassengers",
+          },
+          {
+            TrainId: "218",
+            TrainNumber: "000",
+            CarCount: 0,
+            DirectionNum: 1,
+            CircuitId: 1531,
+            DestinationStationCode: null,
+            LineCode: null,
+            SecondsAtLocation: 54194,
+            ServiceType: "Unknown",
+          },
+          {
+            TrainId: "219",
+            TrainNumber: "000",
+            CarCount: 0,
+            DirectionNum: 1,
+            CircuitId: 1543,
+            DestinationStationCode: null,
+            LineCode: null,
+            SecondsAtLocation: 54194,
+            ServiceType: "Unknown",
+          },
+          
+        ],
+      };
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
+
+
+  // const fetchData = async () => {
+  //   setIsLoading(true);
+
+  //   try {
+  //     const requestOptions = {
+  //       method: "GET",
+  //       mode: "cors",
+  //       // headers: { "Content-Type": "application/json" },
+  //     };
+
+  //     const contentType = 'application/json'
+  //     const api_key = 'e13626d03d8e4c03ac07f95541b3091b'
+
+  //     const response = await fetch(`https://api.wmata.com/TrainPositions/TrainPositions?contentType=${contentType}&api_key=${api_key}`, requestOptions);
+
+  //     if (!response.ok) {
+  //       throw new Error(`Error! status: ${response.status}`);
+  //     }
+  //     const result = await response.json();
+  //     // console.log("result is: ", JSON.stringify(result, null, 4));
+
+  //     setData(result);
+  //   } catch (err) {
+  //     setErr(err.message);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+
+  
   console.log('data')
   console.log(data)
-  // console.log(data.TrainPositions[0].TrainId)
 
   console.log('temp_json')
   console.log(temp_json)
 
   return (
-    <div>
+    <div className="App">
       {err && <h2>{err}</h2>}
-      <button onClick={handleClick}>Fetch data</button>
       {isLoading && <h2>Loading...</h2>}
-      <div className="app-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Train ID</th>
-              <th>Train No.</th>
-              <th>Car Count</th>
-              <th>Direction No.</th>
-              <th>Circuit ID</th>
-              <th>Destination Station Code</th>
-              <th>Line Code</th>
-              <th>Seconds At Location</th>
-              <th>Service Type</th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* to be changed to "data" */}
-            {temp_json.TrainPositions.map((train) => (
-              <tr>
-                <td>{train.TrainId}</td>
-                <td>{train.TrainNumber}</td>
-                <td>{train.CarCount}</td>
-                <td>{train.DirectionNum}</td>
-                <td>{train.CircuitId}</td>
-                <td>{train.DestinationStationCode}</td>
-                <td>{train.LineCode}</td>
-                <td>{train.SecondsAtLocation}</td>
-                <td>{train.ServiceType}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <br />
-      </div>
-      ;
+      {
+        temp_json && 
+        <Table
+        // TODO: change "temp_json" to "data"
+          tableData = {temp_json.TrainPositions}
+          headerData = {['Train ID', 'Train No.', 'Direction No.', 'Car Count', 'Circuit ID', 'Destination Station Code', 'Line Code', 'Seconds At Location', 'Service Type']}
+        />
+      }
     </div>
   );
-};
+}
 
 export default App;
