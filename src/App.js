@@ -1,6 +1,7 @@
 import "./App.css";
 import Table from "./table.tsx";
 import { useEffect, useState } from "react";
+import TableTest from "./components/Table";
 
 function App() {
   const [data, setData] = useState(null);
@@ -48,9 +49,20 @@ function App() {
     }
     
   };
+  // useEffect(() => {
+  //   fetchData()
+  // }, [])
+
+
   useEffect(() => {
-    fetchData()
-  }, [])
+    const intervalCall = setInterval(() => {
+      fetchData();
+    }, 7000);
+    return () => {
+      // clean up
+      clearInterval(intervalCall);
+    };
+  }, []);
 
   // useEffect(() => {
   //   console.log(data);
@@ -226,8 +238,14 @@ function App() {
 
   return (
     <div className="App">
-      {err && <h2>{err}</h2>}
-      {isLoading && <h2>Loading...</h2>}
+      {/* {err && <h2>{err}</h2>} */}
+      {/* {isLoading && <h2>Loading...</h2>} */}
+      <h2>Train App</h2>
+
+      <div className="table_container">
+   <h1>Sortable table with React</h1>
+   <TableTest/>
+  </div>
 {/*       
       <div>
         <label htmlFor="setup">
@@ -253,10 +271,10 @@ function App() {
         </label>
       </div> */}
 
-      {temp_json && (
+      {data && (
         <Table
           // TODO: change "temp_json" to "data"
-          tableData={temp_json.TrainPositions}
+          tableData={data.TrainPositions}
           headerData={[
             "Train ID",
             "Train No.",
