@@ -39,7 +39,7 @@
 .app-container {
   display: flex;
   flex-direction: column;
-  /* gap: 10px; */
+  gap: 10px;
   padding: 1rem;
 }
 
@@ -50,14 +50,15 @@ table {
 
 th,
 td {
-  border: 1px solid #ffffff;
+  border: 1px solid #040000;
   text-align: left;
-  padding: 4px;
+  /* padding: 4px; */
   font-size: 12px;
 }
 
 th {
-  background-color: rgb(117, 201, 250);
+  background-color: rgb(9, 37, 53);
+  color: firebrick;
 }
 
 td {

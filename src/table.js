@@ -23,7 +23,6 @@ const Table = (props) => {
           <td>{train.LineCode}</td>
           <td>{train.SecondsAtLocation}</td>
           <td>{train.ServiceType}</td>
-          {/* <td>{completed === false ? "false" : "true"}</td> */}
         </tr>
       );
     });
