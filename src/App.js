@@ -62,11 +62,6 @@ function App() {
     fetchData();
   }, []);
 
-  // useEffect(() => {
-  //   console.log(data);
-  // }, [data]);
-
-
   const temp_json = {
     TrainPositions: [
       {
@@ -214,12 +209,6 @@ function App() {
       
       if (filterData[key] !== undefined && filterData[key] !== "") {
         toShow = false;
-        console.log("filter", key);
-        console.log(filterData[key])
-        console.log('fired data')
-        
-        console.log(row)
-        console.log(row[key])
         if (
           row[key] !== "" &&
           row[key] !== undefined &&
