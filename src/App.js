@@ -16,6 +16,10 @@ function App() {
     SecondsAtLocation: undefined,
     ServiceType: undefined,
   });
+  const [orderData, setOrderData] = useState({
+    isAscn: true,
+    key: undefined
+  })
   // const [sortedField, setSortedField] = useState(null);
 
   const [err, setErr] = useState("");
@@ -204,6 +208,21 @@ function App() {
   const tableData = () => {
     return temp_json.TrainPositions.filter((row)=>filterByInput(row));
   };
+
+  const orderByKey = (data) => {
+    if (orderData["key"] !== undefined) {
+      return data.sort((a, b) => {
+        if (orderData["isAscn"]) {
+          return a[orderData["key"]] > b[orderData["key"]] ? 1 : -1;
+
+        } else {
+          return a[orderData["key"]] < b[orderData["key"]] ? 1 : -1;
+
+        }
+      });
+    }
+    return data
+  }
   const filterByInput = (row) => {
     let toShow = true;
     Object.keys(filterData).forEach((key) => {
@@ -221,7 +240,7 @@ function App() {
 
       }
     });
-    console.log(toShow);
+    // console.log(toShow);
     return toShow;
   };
 
@@ -234,9 +253,11 @@ function App() {
           // TODO: change "temp_json" to "data"
           filterData={filterData}
           setFilterData={setFilterData}
+          orderData={orderData}
+          setOrderData={setOrderData}
           // sortedField={sortedField}
           // setSortedField={setSortedField}
-          tableData={tableData()}
+          tableData={orderByKey(tableData())}
           headerData={[
             "Train ID",
             "Train No.",

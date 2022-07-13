@@ -3,26 +3,13 @@ import React, { useCallback, useState} from "react";
 
 
 const Table = (props) => {
-  const { tableData, headerData, filterData, setFilterData } = props;
-  // const [sortKey, setSortKey] = useState<SortKeys>();
-  // const [sortOrder, setSortOrder] = useState<SortOrder>("ascn");
-
-  // type Data = typeof filterData
-  // type SortKeys = keyof Data[0] 
-  // type SortOrder = 'ascn' | 'desc'
-
-  // function sortData({tableData, sortKey, reverse}:{
-  //   tableData : Data;
-  //   sortKey: any;
-  //   reverse: boolean;
-  // }) {
-  //   return tableData; 
-  // }
-
-  // const sortedData = useCallback( () => sortData({ tableData: tableData, sortKey, reverse: sortOrder==="desc"}), [tableData, sortKey, sortOrder])
+  const { tableData, headerData, filterData, setFilterData, orderData, setOrderData } = props;
 
   const updateFilterData=(key, value)=> {
     setFilterData({...filterData, [key]: String(value)})
+  }
+  const orderingHandle=(key)=> {
+    setOrderData({key:key, isAscn: !orderData["isAscn"]})
   }
   const tableHeader = () => {
     return headerData.map((data, idx) => {
@@ -31,7 +18,8 @@ const Table = (props) => {
   };
   const tableSearchHeader = () => {
     return Object.keys(filterData).map((key, idx) => {
-      return <th key={idx}><input type="text" id="fname" onChange={(e)=> updateFilterData(key, e.target.value)}></input></th>;
+      return <th key={idx}><input type="text" id="fname" onChange={(e)=> updateFilterData(key, e.target.value)}></input>
+      <button onClick={()=> orderingHandle(key)}>{orderData["key"] == key ? orderData["isAscn"]? "^": "_": ""}</button></th>;
     });
   };
 
