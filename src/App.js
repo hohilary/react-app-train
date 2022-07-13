@@ -4,13 +4,12 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [data, setData] = useState(null);
-  // const [data, setData] = useState({ data: [] });
   const [isLoading, setIsLoading] = useState(false);
   const [filterData, setFilterData] = useState({
     TrainId: undefined,
     TrainNumber: undefined,
-    DirectionNum: undefined,
     CarCount: undefined,
+    DirectionNum: undefined,
     CircuitId: undefined,
     DestinationStationCode: undefined,
     LineCode: undefined,
@@ -18,15 +17,6 @@ function App() {
     ServiceType: undefined,
   });
   const [err, setErr] = useState("");
-
-  // for filter
-  const [filters, setFilters] = useState(["NORMAL", "UNKNOWN"]);
-
-  const handleFilter = (filter) => {
-    filters.includes(filter)
-      ? setFilters(filters.filter((value) => value !== filter))
-      : setFilters(filters.concat(filter));
-  };
 
   const requestOptions = {
     method: "GET",
@@ -76,34 +66,6 @@ function App() {
   //   console.log(data);
   // }, [data]);
 
-  // const newdata = data.filter((element, index) => {
-  //   return element > 50
-  // })
-
-  // const data1 = {
-
-  //   data: data.filter(
-  //     (item) =>
-  //       (filters.includes('NORMAL') && item.ServiceType === 'Normal') ||
-  //       (filters.includes('UNKNOWN') && item.ServiceType === 'Unknown')
-  //   ),
-  // };
-  // setData(data1);
-
-  // console.log('hey there')
-  // console.log(data)
-  // // 👇️ filter with 1 condition
-  const filtered = data
-    ? data.TrainPositions.filter((employee) => {
-        return employee.ServiceType === "Unknown";
-      })
-    : data;
-
-  // console.log('filtered');
-  // console.log(filtered);
-
-  // console.log("data");
-  // console.log(data);
 
   const temp_json = {
     TrainPositions: [
@@ -243,56 +205,40 @@ function App() {
   };
 
   const tableData = () => {
-    return temp_json.TrainPositions.filter(filterByInput);
+    return temp_json.TrainPositions.filter((row)=>filterByInput(row));
   };
   const filterByInput = (row) => {
     let toShow = true;
     Object.keys(filterData).forEach((key) => {
+      console.log('hahahahahaha')
+      
       if (filterData[key] !== undefined && filterData[key] !== "") {
         toShow = false;
         console.log("filter", key);
+        console.log(filterData[key])
+        console.log('fired data')
+        
+        console.log(row)
+        console.log(row[key])
         if (
           row[key] !== "" &&
           row[key] !== undefined &&
           row[key] !== null &&
-          row[key].includes(filterData[key])
+          row[key].toString().includes(filterData[key].toString())
         ) {
           toShow = true;
         }
+
       }
     });
     console.log(toShow);
     return toShow;
   };
+
   return (
     <div className="App">
-      {err && <h2>{err}</h2>}
+      {/* {err && <h2>{err}</h2>} */}
       {isLoading && <h2>Loading...</h2>}
-      {/*       
-      <div>
-        <label htmlFor="setup">
-          Include SETUP:
-          <input
-            id="setup"
-            type="checkbox"
-            checked={filters.includes('SETUP')}
-            onChange={() => handleFilter('SETUP')}
-          />
-        </label>
-      </div>
-
-      <div>
-        <label htmlFor="learn">
-          Include LEARN:
-          <input
-            id="learn"
-            type="checkbox"
-            checked={filters.includes('LEARN')}
-            onChange={() => handleFilter('LEARN')}
-          />
-        </label>
-      </div> */}
-
       {temp_json && (
         <Table
           // TODO: change "temp_json" to "data"
@@ -302,8 +248,8 @@ function App() {
           headerData={[
             "Train ID",
             "Train No.",
-            "Direction No.",
             "Car Count",
+            "Direction No.",
             "Circuit ID",
             "Destination Station Code",
             "Line Code",

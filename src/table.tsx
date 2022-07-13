@@ -5,22 +5,7 @@ import React, { useEffect } from "react";
 const Table = (props) => {
   const { tableData, headerData, filterData, setFilterData } = props;
 
-  const columns = [
-    { label: "Full Name", accessor: "full_name" },
-    { label: "Email", accessor: "email" },
-    { label: "Gender", accessor: "gender" },
-    { label: "Age", accessor: "age" },
-    { label: "Start date", accessor: "start_date" },
-   ];
-  
-
-
-
-  let carCount = [... new Set(tableData.map((train)=>train.CarCount))]
-  
   const updateFilterData=(key, value)=> {
-    // console.log( idx, value)
-    
     setFilterData({...filterData, [key]: String(value)})
   }
   const tableHeader = () => {
@@ -33,9 +18,8 @@ const Table = (props) => {
       return <th key={idx}><input type="text" id="fname" onChange={(e)=> updateFilterData(key, e.target.value)}></input></th>;
     });
   };
-//   const lineCode = ["RD", "BL", "YL", "OR", "GR", "SV"];
 
-  const lineCodeBackground = (lineCode) => {
+  const lineCodeBackground = (lineCode: string) => {
     switch (lineCode) {
       case "RD":
         return "background-red";
@@ -54,7 +38,7 @@ const Table = (props) => {
     }
   };
 
-  const serviceTypeBackground = (serviceType) => {
+  const serviceTypeBackground = (serviceType: string) => {
     switch (serviceType) {
       case "NoPassengers":
         return "background-nopassengers";
@@ -69,10 +53,8 @@ const Table = (props) => {
     }
   };
 
-
   const returnTableData = () => {
     return tableData.map((train, idx) => {
-      //   const { id, title, completed } = todos;
       return (
         <tr data-id={train.TrainId} key={train.TrainId}>
           <td>{train.TrainId}</td>
@@ -90,8 +72,6 @@ const Table = (props) => {
       );
     });
   };
-
-
 
   return (
     <>
