@@ -56,9 +56,9 @@ td {
   font-size: 12px;
 }
 
-th {
-  background-color: rgb(9, 37, 53);
-  color: firebrick;
+thead {
+  background-color: rgb(7, 114, 172);
+  color: white;
 }
 
 td {

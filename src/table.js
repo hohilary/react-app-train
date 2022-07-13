@@ -5,7 +5,7 @@ const Table = (props) => {
 
   const tableHeader = () => {
     return headerData.map((data, idx) => {
-      return <td key={idx}>{data}</td>;
+      return <th key={idx}>{data}</th>;
     });
   };
 
