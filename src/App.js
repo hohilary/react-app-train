@@ -1,5 +1,5 @@
 import "./App.css";
-import Table from "./table";
+import Table from "./table.tsx";
 import { useEffect, useState } from "react";
 
 function App() {
@@ -82,14 +82,153 @@ function App() {
   console.log(filtered);
 
 
+
   console.log("data");
   console.log(data);
+
+  const temp_json = {
+    TrainPositions: [
+      {
+        TrainId: "008",
+        TrainNumber: "000",
+        CarCount: 0,
+        DirectionNum: 1,
+        CircuitId: 1487,
+        DestinationStationCode: null,
+        LineCode: "RD",
+        SecondsAtLocation: 54194,
+        ServiceType: "Unknown",
+      },
+      {
+        TrainId: "009",
+        TrainNumber: "000",
+        CarCount: 0,
+        DirectionNum: 2,
+        CircuitId: 1488,
+        DestinationStationCode: null,
+        LineCode: "BL",
+        SecondsAtLocation: 54194,
+        ServiceType: "Unknown",
+      },
+      {
+        TrainId: "010",
+        TrainNumber: "000",
+        CarCount: 0,
+        DirectionNum: 1,
+        CircuitId: 1656,
+        DestinationStationCode: null,
+        LineCode: "GR",
+        SecondsAtLocation: 54194,
+        ServiceType: "Unknown",
+      },
+      {
+        TrainId: "011",
+        TrainNumber: "000",
+        CarCount: 0,
+        DirectionNum: 2,
+        CircuitId: 1657,
+        DestinationStationCode: null,
+        LineCode: "SV",
+        SecondsAtLocation: 54194,
+        ServiceType: "Special",
+      },
+      {
+        TrainId: "046",
+        TrainNumber: "000",
+        CarCount: 0,
+        DirectionNum: 2,
+        CircuitId: 1701,
+        DestinationStationCode: null,
+        LineCode: "OR",
+        SecondsAtLocation: 54194,
+        ServiceType: "Unknown",
+      },
+      {
+        TrainId: "051",
+        TrainNumber: "000",
+        CarCount: 0,
+        DirectionNum: 1,
+        CircuitId: 1683,
+        DestinationStationCode: null,
+        LineCode: "YL",
+        SecondsAtLocation: 35402,
+        ServiceType: "Unknown",
+      },
+      {
+        TrainId: "055",
+        TrainNumber: "PM47",
+        CarCount: 0,
+        DirectionNum: 1,
+        CircuitId: 1638,
+        DestinationStationCode: null,
+        LineCode: null,
+        SecondsAtLocation: 54194,
+        ServiceType: "Normal",
+      },
+      {
+        TrainId: "161",
+        TrainNumber: "000",
+        CarCount: 6,
+        DirectionNum: 1,
+        CircuitId: 2581,
+        DestinationStationCode: null,
+        LineCode: null,
+        SecondsAtLocation: 2471,
+        ServiceType: "Special",
+      },
+      {
+        TrainId: "164",
+        TrainNumber: "708",
+        CarCount: 6,
+        DirectionNum: 1,
+        CircuitId: 3201,
+        DestinationStationCode: null,
+        LineCode: null,
+        SecondsAtLocation: 1,
+        ServiceType: "NoPassengers",
+      },
+      {
+        TrainId: "193",
+        TrainNumber: "703",
+        CarCount: 6,
+        DirectionNum: 1,
+        CircuitId: 2807,
+        DestinationStationCode: null,
+        LineCode: null,
+        SecondsAtLocation: 17,
+        ServiceType: "NoPassengers",
+      },
+      {
+        TrainId: "218",
+        TrainNumber: "000",
+        CarCount: 0,
+        DirectionNum: 1,
+        CircuitId: 1531,
+        DestinationStationCode: null,
+        LineCode: 'RD',
+        SecondsAtLocation: 54194,
+        ServiceType: "Unknown",
+      },
+      {
+        TrainId: "219",
+        TrainNumber: "000",
+        CarCount: 0,
+        DirectionNum: 1,
+        CircuitId: 1543,
+        DestinationStationCode: null,
+        LineCode: null,
+        SecondsAtLocation: 54194,
+        ServiceType: "Unknown",
+      },
+
+    ],
+  };
 
   return (
     <div className="App">
       {err && <h2>{err}</h2>}
       {isLoading && <h2>Loading...</h2>}
-      <h2>Train App</h2>
+{/*       
       <div>
         <label htmlFor="setup">
           Include SETUP:
@@ -112,12 +251,12 @@ function App() {
             onChange={() => handleFilter('LEARN')}
           />
         </label>
-      </div>
+      </div> */}
 
-      {data && (
+      {temp_json && (
         <Table
           // TODO: change "temp_json" to "data"
-          tableData={data.TrainPositions}
+          tableData={temp_json.TrainPositions}
           headerData={[
             "Train ID",
             "Train No.",
@@ -129,6 +268,7 @@ function App() {
             "Seconds At Location",
             "Service Type",
           ]}
+          
         />
       )}
     </div>
