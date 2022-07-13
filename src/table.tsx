@@ -1,9 +1,25 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useState} from "react";
 
 
 
 const Table = (props) => {
   const { tableData, headerData, filterData, setFilterData } = props;
+  // const [sortKey, setSortKey] = useState<SortKeys>();
+  // const [sortOrder, setSortOrder] = useState<SortOrder>("ascn");
+
+  // type Data = typeof filterData
+  // type SortKeys = keyof Data[0] 
+  // type SortOrder = 'ascn' | 'desc'
+
+  // function sortData({tableData, sortKey, reverse}:{
+  //   tableData : Data;
+  //   sortKey: any;
+  //   reverse: boolean;
+  // }) {
+  //   return tableData; 
+  // }
+
+  // const sortedData = useCallback( () => sortData({ tableData: tableData, sortKey, reverse: sortOrder==="desc"}), [tableData, sortKey, sortOrder])
 
   const updateFilterData=(key, value)=> {
     setFilterData({...filterData, [key]: String(value)})

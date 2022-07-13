@@ -16,6 +16,8 @@ function App() {
     SecondsAtLocation: undefined,
     ServiceType: undefined,
   });
+  // const [sortedField, setSortedField] = useState(null);
+
   const [err, setErr] = useState("");
 
   const requestOptions = {
@@ -205,7 +207,6 @@ function App() {
   const filterByInput = (row) => {
     let toShow = true;
     Object.keys(filterData).forEach((key) => {
-      console.log('hahahahahaha')
       
       if (filterData[key] !== undefined && filterData[key] !== "") {
         toShow = false;
@@ -233,6 +234,8 @@ function App() {
           // TODO: change "temp_json" to "data"
           filterData={filterData}
           setFilterData={setFilterData}
+          // sortedField={sortedField}
+          // setSortedField={setSortedField}
           tableData={tableData()}
           headerData={[
             "Train ID",
