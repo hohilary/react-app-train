@@ -20,7 +20,7 @@ function App() {
     isAscn: true,
     key: undefined
   })
-  // const [sortedField, setSortedField] = useState(null);
+
 
   const [err, setErr] = useState("");
 
@@ -54,159 +54,17 @@ function App() {
     }
   };
 
-  // useEffect(() => {
-  //   const intervalCall = setInterval(() => {
-  //     fetchData();
-  //   }, 7000);
-  //   return () => {
-  //     // clean up
-  //     clearInterval(intervalCall);
-  //   };
-  // }, []);
-
   useEffect(() => {
-    fetchData();
+    const intervalCall = setInterval(() => {
+      fetchData();
+    }, 7000);
+    return () => {
+      clearInterval(intervalCall);
+    };
   }, []);
 
-  const temp_json = {
-    TrainPositions: [
-      {
-        TrainId: "008",
-        TrainNumber: "000",
-        CarCount: 0,
-        DirectionNum: 1,
-        CircuitId: 1487,
-        DestinationStationCode: null,
-        LineCode: "RD",
-        SecondsAtLocation: 54194,
-        ServiceType: "Unknown",
-      },
-      {
-        TrainId: "009",
-        TrainNumber: "000",
-        CarCount: 0,
-        DirectionNum: 2,
-        CircuitId: 1488,
-        DestinationStationCode: null,
-        LineCode: "BL",
-        SecondsAtLocation: 54194,
-        ServiceType: "Unknown",
-      },
-      {
-        TrainId: "010",
-        TrainNumber: "000",
-        CarCount: 0,
-        DirectionNum: 1,
-        CircuitId: 1656,
-        DestinationStationCode: null,
-        LineCode: "GR",
-        SecondsAtLocation: 54194,
-        ServiceType: "Unknown",
-      },
-      {
-        TrainId: "011",
-        TrainNumber: "000",
-        CarCount: 0,
-        DirectionNum: 2,
-        CircuitId: 1657,
-        DestinationStationCode: null,
-        LineCode: "SV",
-        SecondsAtLocation: 54194,
-        ServiceType: "Special",
-      },
-      {
-        TrainId: "046",
-        TrainNumber: "000",
-        CarCount: 0,
-        DirectionNum: 2,
-        CircuitId: 1701,
-        DestinationStationCode: null,
-        LineCode: "OR",
-        SecondsAtLocation: 54194,
-        ServiceType: "Unknown",
-      },
-      {
-        TrainId: "051",
-        TrainNumber: "000",
-        CarCount: 0,
-        DirectionNum: 1,
-        CircuitId: 1683,
-        DestinationStationCode: null,
-        LineCode: "YL",
-        SecondsAtLocation: 35402,
-        ServiceType: "Unknown",
-      },
-      {
-        TrainId: "055",
-        TrainNumber: "PM47",
-        CarCount: 0,
-        DirectionNum: 1,
-        CircuitId: 1638,
-        DestinationStationCode: null,
-        LineCode: null,
-        SecondsAtLocation: 54194,
-        ServiceType: "Normal",
-      },
-      {
-        TrainId: "161",
-        TrainNumber: "000",
-        CarCount: 6,
-        DirectionNum: 1,
-        CircuitId: 2581,
-        DestinationStationCode: null,
-        LineCode: null,
-        SecondsAtLocation: 2471,
-        ServiceType: "Special",
-      },
-      {
-        TrainId: "164",
-        TrainNumber: "708",
-        CarCount: 6,
-        DirectionNum: 1,
-        CircuitId: 3201,
-        DestinationStationCode: null,
-        LineCode: null,
-        SecondsAtLocation: 1,
-        ServiceType: "NoPassengers",
-      },
-      {
-        TrainId: "193",
-        TrainNumber: "703",
-        CarCount: 6,
-        DirectionNum: 1,
-        CircuitId: 2807,
-        DestinationStationCode: null,
-        LineCode: null,
-        SecondsAtLocation: 17,
-        ServiceType: "NoPassengers",
-      },
-      {
-        TrainId: "218",
-        TrainNumber: "000",
-        CarCount: 0,
-        DirectionNum: 1,
-        CircuitId: 1531,
-        DestinationStationCode: null,
-        LineCode: "RD",
-        SecondsAtLocation: 54194,
-        ServiceType: "Unknown",
-      },
-      {
-        TrainId: "219",
-        TrainNumber: "000",
-        CarCount: 0,
-        DirectionNum: 1,
-        CircuitId: 1543,
-        DestinationStationCode: null,
-        LineCode: null,
-        SecondsAtLocation: 54194,
-        ServiceType: "Unknown",
-      },
-    ],
-  };
-
   const tableData = () => {
-    return temp_json.TrainPositions.filter((row)=>filterByInput(row));
+    return data.TrainPositions.filter((row)=>filterByInput(row));
   };
 
   const orderByKey = (data) => {
@@ -214,10 +72,8 @@ function App() {
       return data.sort((a, b) => {
         if (orderData["isAscn"]) {
           return a[orderData["key"]] > b[orderData["key"]] ? 1 : -1;
-
         } else {
           return a[orderData["key"]] < b[orderData["key"]] ? 1 : -1;
-
         }
       });
     }
@@ -237,26 +93,20 @@ function App() {
         ) {
           toShow = true;
         }
-
       }
     });
-    // console.log(toShow);
     return toShow;
   };
 
   return (
     <div className="App">
-      {/* {err && <h2>{err}</h2>} */}
       {isLoading && <h2>Loading...</h2>}
-      {temp_json && (
+      {data && (
         <Table
-          // TODO: change "temp_json" to "data"
           filterData={filterData}
           setFilterData={setFilterData}
           orderData={orderData}
           setOrderData={setOrderData}
-          // sortedField={sortedField}
-          // setSortedField={setSortedField}
           tableData={orderByKey(tableData())}
           headerData={[
             "Train ID",

@@ -1,7 +1,5 @@
 import React, { useCallback, useState} from "react";
 
-
-
 const Table = (props) => {
   const { tableData, headerData, filterData, setFilterData, orderData, setOrderData } = props;
 
