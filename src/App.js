@@ -1,23 +1,32 @@
 import "./App.css";
 import Table from "./table.tsx";
 import { useEffect, useState } from "react";
-import TableTest from "./components/Table";
 
 function App() {
   const [data, setData] = useState(null);
   // const [data, setData] = useState({ data: [] });
   const [isLoading, setIsLoading] = useState(false);
+  const [filterData, setFilterData] = useState({
+    TrainId: undefined,
+    TrainNumber: undefined,
+    DirectionNum: undefined,
+    CarCount: undefined,
+    CircuitId: undefined,
+    DestinationStationCode: undefined,
+    LineCode: undefined,
+    SecondsAtLocation: undefined,
+    ServiceType: undefined,
+  });
   const [err, setErr] = useState("");
 
   // for filter
-  const [filters, setFilters] = useState(['NORMAL', 'UNKNOWN']);
+  const [filters, setFilters] = useState(["NORMAL", "UNKNOWN"]);
 
   const handleFilter = (filter) => {
     filters.includes(filter)
       ? setFilters(filters.filter((value) => value !== filter))
       : setFilters(filters.concat(filter));
   };
-
 
   const requestOptions = {
     method: "GET",
@@ -47,21 +56,20 @@ function App() {
     } finally {
       setIsLoading(false);
     }
-    
   };
-  // useEffect(() => {
-  //   fetchData()
-  // }, [])
 
+  // useEffect(() => {
+  //   const intervalCall = setInterval(() => {
+  //     fetchData();
+  //   }, 7000);
+  //   return () => {
+  //     // clean up
+  //     clearInterval(intervalCall);
+  //   };
+  // }, []);
 
   useEffect(() => {
-    const intervalCall = setInterval(() => {
-      fetchData();
-    }, 7000);
-    return () => {
-      // clean up
-      clearInterval(intervalCall);
-    };
+    fetchData();
   }, []);
 
   // useEffect(() => {
@@ -73,7 +81,7 @@ function App() {
   // })
 
   // const data1 = {
-    
+
   //   data: data.filter(
   //     (item) =>
   //       (filters.includes('NORMAL') && item.ServiceType === 'Normal') ||
@@ -82,21 +90,20 @@ function App() {
   // };
   // setData(data1);
 
-
-  console.log('hey there')
-  console.log(data)
+  // console.log('hey there')
+  // console.log(data)
   // // 👇️ filter with 1 condition
-  const filtered = data? data.TrainPositions.filter(employee => {
-    return employee.ServiceType === 'Unknown';
-  }): data ;
+  const filtered = data
+    ? data.TrainPositions.filter((employee) => {
+        return employee.ServiceType === "Unknown";
+      })
+    : data;
 
-  console.log('filtered');
-  console.log(filtered);
+  // console.log('filtered');
+  // console.log(filtered);
 
-
-
-  console.log("data");
-  console.log(data);
+  // console.log("data");
+  // console.log(data);
 
   const temp_json = {
     TrainPositions: [
@@ -217,7 +224,7 @@ function App() {
         DirectionNum: 1,
         CircuitId: 1531,
         DestinationStationCode: null,
-        LineCode: 'RD',
+        LineCode: "RD",
         SecondsAtLocation: 54194,
         ServiceType: "Unknown",
       },
@@ -232,21 +239,36 @@ function App() {
         SecondsAtLocation: 54194,
         ServiceType: "Unknown",
       },
-
     ],
   };
 
+  const tableData = () => {
+    return temp_json.TrainPositions.filter(filterByInput);
+  };
+  const filterByInput = (row) => {
+    let toShow = true;
+    Object.keys(filterData).forEach((key) => {
+      if (filterData[key] !== undefined && filterData[key] !== "") {
+        toShow = false;
+        console.log("filter", key);
+        if (
+          row[key] !== "" &&
+          row[key] !== undefined &&
+          row[key] !== null &&
+          row[key].includes(filterData[key])
+        ) {
+          toShow = true;
+        }
+      }
+    });
+    console.log(toShow);
+    return toShow;
+  };
   return (
     <div className="App">
-      {/* {err && <h2>{err}</h2>} */}
-      {/* {isLoading && <h2>Loading...</h2>} */}
-      <h2>Train App</h2>
-
-      <div className="table_container">
-   <h1>Sortable table with React</h1>
-   <TableTest/>
-  </div>
-{/*       
+      {err && <h2>{err}</h2>}
+      {isLoading && <h2>Loading...</h2>}
+      {/*       
       <div>
         <label htmlFor="setup">
           Include SETUP:
@@ -271,10 +293,12 @@ function App() {
         </label>
       </div> */}
 
-      {data && (
+      {temp_json && (
         <Table
           // TODO: change "temp_json" to "data"
-          tableData={data.TrainPositions}
+          filterData={filterData}
+          setFilterData={setFilterData}
+          tableData={tableData()}
           headerData={[
             "Train ID",
             "Train No.",
@@ -286,7 +310,6 @@ function App() {
             "Seconds At Location",
             "Service Type",
           ]}
-          
         />
       )}
     </div>

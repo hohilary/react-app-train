@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 
 
 const Table = (props) => {
-  const { tableData, headerData } = props;
+  const { tableData, headerData, filterData, setFilterData } = props;
 
   const columns = [
     { label: "Full Name", accessor: "full_name" },
@@ -18,12 +18,21 @@ const Table = (props) => {
 
   let carCount = [... new Set(tableData.map((train)=>train.CarCount))]
   
+  const updateFilterData=(key, value)=> {
+    // console.log( idx, value)
+    
+    setFilterData({...filterData, [key]: String(value)})
+  }
   const tableHeader = () => {
     return headerData.map((data, idx) => {
       return <th key={idx}>{data}</th>;
     });
   };
-
+  const tableSearchHeader = () => {
+    return Object.keys(filterData).map((key, idx) => {
+      return <th key={idx}><input type="text" id="fname" onChange={(e)=> updateFilterData(key, e.target.value)}></input></th>;
+    });
+  };
 //   const lineCode = ["RD", "BL", "YL", "OR", "GR", "SV"];
 
   const lineCodeBackground = (lineCode) => {
@@ -89,6 +98,7 @@ const Table = (props) => {
       <table>
         <thead>
           <tr>{tableHeader()}</tr>
+          <tr>{tableSearchHeader()}</tr>
         </thead>
         <tbody>{returnTableData()}</tbody>
       </table>
