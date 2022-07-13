@@ -39,7 +39,6 @@ function App() {
         throw new Error(`Error! status: ${response.status}`);
       }
       const result = await response.json();
-      // console.log("result is: ", JSON.stringify(result, null, 4));
 
       setData(result);
     } catch (err) {
@@ -47,17 +46,6 @@ function App() {
     } finally {
       setIsLoading(false);
     }
-
-    // useEffect(() => {
-    //   // fetch('https://jsonplaceholder.typicode.com/todos')
-    //   fetch(
-    //     `https://api.wmata.com/TrainPositions/TrainPositions?contentType=${contentType}&api_key=${api_key}`,
-    //     requestOptions
-    //   )
-    //     .then((response) => response.json())
-    //     .then((json) => setData(json));
-    // }, []);
-
     
   };
   useEffect(() => {
@@ -83,26 +71,15 @@ function App() {
   // setData(data1);
 
 
-
-
-  // const employees = [
-  //   {id: 1, name: 'Alice', country: 'Canada'},
-  //   {id: 2, name: 'Bob', country: 'Belgium'},
-  //   {id: 3, name: 'Carl', country: 'Canada'},
-  //   {id: 4, name: 'Dean', country: 'Germany'},
-  // ];
-
   console.log('hey there')
   console.log(data)
   // // 👇️ filter with 1 condition
   const filtered = data? data.TrainPositions.filter(employee => {
     return employee.ServiceType === 'Unknown';
   }): data ;
-  // 👇️ [{id: 1, name: 'Alice', country: 'Canada'},
-  //     {id: 3, name: 'Carl', 'country: 'Canada'}]
+
   console.log('filtered');
   console.log(filtered);
-
 
 
   console.log("data");
